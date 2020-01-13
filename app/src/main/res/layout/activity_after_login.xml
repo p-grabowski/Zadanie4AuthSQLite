@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AfterLoginActivity"
-    android:orientation="vertical">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:padding="15sp">
 
     <TextView
         android:gravity="center"
@@ -13,14 +14,25 @@
         android:layout_height="wrap_content"
         android:id="@+id/afterTv"
         android:text="Witaj"
-        />
-
-
+        android:layout_margin="10sp"
+        android:textColor="#fff"/>
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/afterBtPassword"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15sp"
+        android:background="@color/colorAccent"
+        android:text="Zmień hasło uzytkownika"
+        android:textColor="#fff"/>
+    <Button
+        android:layout_width="200sp"
+        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:text="Dodaj uzytkownika"
         android:id="@+id/afterBtAddUser"
+        android:background="@color/colorAccent"
+        android:textColor="#fff"
         android:enabled="false"/>
 
     <ListView

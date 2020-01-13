@@ -1,7 +1,5 @@
 package com.example.zadanie3auth;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -64,6 +64,7 @@ public class AddUserActivity extends AppCompatActivity {
                         if(baza.addUser(username.getText().toString(), intRange, name.getText().toString())) {
                             startActivity(new Intent(getApplicationContext(), AfterLoginActivity.class));
                             Toast.makeText(AddUserActivity.this, "Uzytkownik dodany", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                         else Toast.makeText(AddUserActivity.this, "Blad przy dodawaniu uzytkownika", Toast.LENGTH_SHORT).show();
                     }else
@@ -71,6 +72,11 @@ public class AddUserActivity extends AppCompatActivity {
                 }
             }
         });
-
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 }

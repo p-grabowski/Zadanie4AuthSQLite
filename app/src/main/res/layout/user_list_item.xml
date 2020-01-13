@@ -9,8 +9,10 @@
         android:text="Imie nazwisko"
         android:id="@+id/itemName"
         android:textStyle="bold"
+        android:textColor="#fff"
         android:textSize="20dp"/>
     <TextView
+        android:textColor="#ddd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="login"

@@ -5,4 +5,5 @@ public class Global {
     public static String username = "example";
     public static String name = "example";
     public static int range = 0;
+    public static String salt = "abc";
 }

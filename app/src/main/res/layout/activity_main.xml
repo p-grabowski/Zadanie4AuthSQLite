@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
-
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:padding="15sp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nazwa uzytkownika: "
+        android:textColor="#fff"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="login"
+        android:hint=". . ."
+        android:textColor="#fff"
+        android:textColorHint="#fff"
         android:id="@+id/mainEtUsername"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hasło: "
+        android:textColor="#fff"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password"
+        android:hint=". . ."
+        android:textColor="#fff"
+        android:textColorHint="#fff"
         android:inputType="textPassword"
         android:id="@+id/mainEtPasswd"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit"
+        android:background="@color/colorAccent"
+        android:textColor="#fff"
         android:id="@+id/mainBtSubmit"/>
 </LinearLayout>

@@ -1,30 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChangePassActivity"
-    android:orientation="vertical">
-
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:padding="15sp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aktualne hasło: "
+        android:textColor="#fff"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="stare haslo"
+        android:hint=". . ."
+        android:inputType="textPassword"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
         android:id="@+id/changePassEtOldPass"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nowe hasło: "
+        android:textColor="#fff"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="nowe haslo 1"
+        android:hint=". . ."
+        android:inputType="textPassword"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
         android:id="@+id/changePassEtNewPass1"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Powtórz nowe hasło: "
+        android:textColor="#fff"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="nowe haslo 2"
+        android:hint=". . ."
+        android:inputType="textPassword"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
         android:id="@+id/changePassEtNewPass2"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Zmien Haslo"
+        android:background="@color/colorAccent"
+        android:textColor="#fff"
         android:id="@+id/changePassBtSubmit"/>
 </LinearLayout>

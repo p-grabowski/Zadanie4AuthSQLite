@@ -1,7 +1,5 @@
 package com.example.zadanie3auth;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -64,7 +64,7 @@ if(baza.checkUserIsExist("admin")==false) {
 
                         if(baza.checkDefaultPass(Global.id)){
                             Intent intent = new Intent(MainActivity.this, ChangePassActivity.class);
-                            intent.putExtra("defaultPass", "d");
+                            intent.putExtra("defaultPass", 1);
                             startActivity(intent);
                             finish();
                         }else {

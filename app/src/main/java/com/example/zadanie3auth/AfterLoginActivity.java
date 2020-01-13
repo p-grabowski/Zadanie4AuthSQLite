@@ -17,7 +17,7 @@ public class AfterLoginActivity extends AppCompatActivity {
 
     TextView textView;
     //int id;
-    Button addUser;
+    Button addUser, changePass;
     ListView listUsers;
     DataBaseHelper baza;
 
@@ -30,6 +30,7 @@ public class AfterLoginActivity extends AppCompatActivity {
         textView = findViewById(R.id.afterTv);
         addUser = findViewById(R.id.afterBtAddUser);
         listUsers = findViewById(R.id.afterListUsers);
+        changePass = findViewById(R.id.afterBtPassword);
 
         //id = getIntent().getIntExtra("id",0);
         String a;
@@ -43,13 +44,13 @@ public class AfterLoginActivity extends AppCompatActivity {
         if(Global.range==1){            //jesli uzytkownik jest adminem
             addUser.setEnabled(true);
             RefreshList();
-
         }
 
         addUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), AddUserActivity.class));
+                finish();
             }
         });
 
@@ -59,9 +60,17 @@ public class AfterLoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(AfterLoginActivity.this, EditUserActivity.class);
                 intent.putExtra("edit", position);
                 startActivity(intent);
+                finish();
             }
         });
 
+        changePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ChangePassActivity.class));
+                finish();
+            }
+        });
     }
     @Override
     public void onBackPressed() {

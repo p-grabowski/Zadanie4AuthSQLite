@@ -1,44 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".EditUserActivity"
-    android:orientation="vertical">
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="username"
-        android:id="@+id/editEtUsername"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="name"
-        android:id="@+id/editEtName"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="passwd"
-        android:id="@+id/editEtPassword"/>
+    android:background="@color/colorPrimary"
+    android:padding="15sp">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/editBtDelete"
+            android:layout_width="200sp"
             android:layout_height="wrap_content"
-            android:text="Ranga: "/>
-        <Spinner
-            android:id="@+id/editSpRange"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15sp"
+            android:background="@color/colorAccent"
+            android:text="Usuń uzytkownika"
+            android:textColor="#fff"/>
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:spinnerMode="dropdown" />
+            android:text="Nazwa użytkownika: "
+            android:textColor="#fff"/>
+        <EditText
+            android:id="@+id/editEtUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=". . ."
+            android:textColor="#fff"
+            android:textColorHint="#fff"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Imię i nawisko: "
+            android:textColor="#fff"/>
+        <EditText
+            android:id="@+id/editEtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=". . ."
+            android:textColor="#fff"
+            android:textColorHint="#fff"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Ranga: "
+                android:textColor="#fff"/>
+            <Spinner
+                android:id="@+id/editSpRange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15sp"
+                android:spinnerMode="dropdown"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hasło: "
+            android:textColor="#fff"/>
+        <EditText
+            android:id="@+id/editEtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint=". . ."
+            android:textColor="#fff"
+            android:textColorHint="#fff"/>
+       <!-- <Button
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorAccent"
+            android:textColor="#fff"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:text="Zmień hasło uzytkownika"
+            android:id="@+id/editBtPassword"
+            android:layout_marginBottom="15sp"/>-->
+        <Button
+            android:id="@+id/editBtSubmit"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorAccent"
+            android:text="Edytuj uzytkownika"
+            android:textColor="#fff"/>
     </LinearLayout>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Edytuj uzytkownika"
-        android:id="@+id/editBtSubmit"/>
-
-</LinearLayout>
+</ScrollView>

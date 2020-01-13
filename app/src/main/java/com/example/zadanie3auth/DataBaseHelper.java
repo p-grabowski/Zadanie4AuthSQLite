@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String DB_name = "Base.db";
@@ -19,7 +23,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     public DataBaseHelper(Context context) {
-        super(context, DB_name, null, 3);
+        super(context, DB_name, null, 4);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
@@ -41,6 +45,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean login(String username, String password){
+        password = securityPassword(password, Global.salt);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(Table_name, new String[]{COL_3},COL_2 + "=?",
                 new String[]{username},null, null, null);
@@ -81,7 +86,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, username);
-        contentValues.put(COL_3, "secure");
+        contentValues.put(COL_3, securityPassword("secure", Global.salt));
         contentValues.put(COL_4, range);
         contentValues.put(COL_5, name);
         contentValues.put(COL_6, 1);
@@ -113,9 +118,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return res.getInt(0);
     }
 
-    public Integer deleteUser(String id){
+    public boolean deleteUser(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(Table_name, "_id = ?", new String[] { id });
+        if(db.delete(Table_name, "_id = ?", new String[] { id.toString() })>0){
+            return true;
+        }else return false;
     }
 
     public boolean checkUserIsExist(String username){  //sprawdz czy istnieje, jesli istanieje zwroc true, jesli nie to false
@@ -131,10 +138,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1, id);
         contentValues.put(COL_2, username);
-        contentValues.put(COL_3, password);
+        contentValues.put(COL_3, securityPassword(password, Global.salt));
         contentValues.put(COL_4, range);
         contentValues.put(COL_5, name);
-        contentValues.put(COL_6, 1);
+        contentValues.put(COL_6, 0);
         db.update(Table_name, contentValues, COL_1 +"= ?", new String[]{id.toString()});
         return true;
     }
@@ -142,7 +149,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1, id);
-        contentValues.put(COL_3, password);
+        contentValues.put(COL_3, securityPassword(password, Global.salt));
         db.update(Table_name, contentValues, COL_1 +"= ?", new String[]{id.toString()});
         return true;
     }
@@ -152,5 +159,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_6, 0);
         db.update(Table_name, contentValues, COL_1 +"= ?", new String[]{id.toString()});
         return true;
+    }
+
+    public String securityPassword(String password, String salt){
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt.getBytes(StandardCharsets.UTF_8));
+            byte[] bytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++){
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
     }
 }

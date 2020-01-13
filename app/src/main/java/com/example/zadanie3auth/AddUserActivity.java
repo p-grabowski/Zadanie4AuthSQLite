@@ -12,8 +12,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import static android.text.TextUtils.isEmpty;
 
 public class AddUserActivity extends AppCompatActivity {

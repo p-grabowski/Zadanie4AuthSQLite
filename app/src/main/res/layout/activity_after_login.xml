@@ -22,4 +22,9 @@
         android:text="Dodaj uzytkownika"
         android:id="@+id/afterBtAddUser"
         android:enabled="false"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/afterListUsers"/>
 </LinearLayout>

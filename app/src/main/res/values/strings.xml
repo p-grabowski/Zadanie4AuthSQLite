@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Zadanie4AuthSQLite</string>
+    <string-array name="range_list">
+        <item>User</item>
+        <item>Admin</item>
+    </string-array>
 </resources>

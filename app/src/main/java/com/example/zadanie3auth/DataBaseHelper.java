@@ -118,7 +118,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return db.delete(Table_name, "_id = ?", new String[] { id });
     }
 
-    public boolean checkUserIsExist(String username){  //sprawdz czy istnieje, jesli istenieje więcej niż 0 rekordów to true, mniej - false
+    public boolean checkUserIsExist(String username){  //sprawdz czy istnieje, jesli istanieje zwroc true, jesli nie to false
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.query(Table_name, new String[]{COL_1},COL_2 + "=?",
                 new String[]{username},null, null, null);

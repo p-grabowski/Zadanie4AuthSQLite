@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class ChangePassActivity extends AppCompatActivity {
@@ -42,8 +43,10 @@ public class ChangePassActivity extends AppCompatActivity {
                     if(newPass1.getText().toString().equals(newPass2.getText().toString())){
                         if(baza.upadateUserPass(Global.id,newPass1.getText().toString())){
                             if(d.equals("d")){
-                                if(baza.upadateUserPassDef(Global.id))
+                                if(baza.upadateUserPassDef(Global.id)) {
+                                    Toast.makeText(ChangePassActivity.this, "zmieniono haslo", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(), AfterLoginActivity.class));
+                                }
                                 else
                                     Log.d("Users", "błąd przy zmianie hasla");
                             }

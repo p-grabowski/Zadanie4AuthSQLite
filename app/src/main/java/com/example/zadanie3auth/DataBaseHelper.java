@@ -13,11 +13,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_1 = "_id";
     public static final String COL_2 = "username";
     public static final String COL_3 = "password";
-    public static final String COL_4 = "range";   //1 - admin, 0 - user
+    public static final String COL_4 = "range";         //1 - admin, 0 - user
+    public static final String COL_5 = "name";
+    public static final String COL_6 = "defaultPass";   //1 - wymaga zmiany, 0 - nie wymaga zmian
 
 
     public DataBaseHelper(Context context) {
-        super(context, DB_name, null, 1);
+        super(context, DB_name, null, 3);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
@@ -27,7 +29,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_2 + " TEXT, " +
                 COL_3 + " TEXT, " +
-                COL_4 + " INTEGER);");
+                COL_4 + " INTEGER," +
+                COL_5 + " TEXT," +
+                COL_6 + " INTEGER);");
     }
 
     @Override
@@ -37,43 +41,50 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean login(String username, String password){
-   /*     SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(Table_name, new String[]{COL_1, COL_2, COL_3, COL_4},COL_2 + "=?",
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(Table_name, new String[]{COL_3},COL_2 + "=?",
                 new String[]{username},null, null, null);
-
         if (cursor != null && cursor.moveToFirst()&& cursor.getCount()>0) {
-            //if cursor has value then in user database there is user associated with this given email
-            Auth user1 = new Auth(cursor.getInt(0), cursor.getString(1), cursor.getString(2),spr(cursor.getInt(3)));
-
-            //Match both passwords check they are same or not
-            if (password.equals(cursor.getString(2))) {
+            //Auth user1 = new Auth(cursor.getInt(0), cursor.getString(1), cursor.getString(2),spr(cursor.getInt(3)));
+            if (password.equals(cursor.getString(0))) {
                 return true;
             }
         }
-
-        //if user password does not matches or there is no record with that email then return @false
         return false;
-*/
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from "+Table_name+" where "+COL_2+" = '" + username + "' AND " +COL_3+" = '"+password+"';", null);
-        if (res.getCount() > 0) return true;
-        else return false;
+    }
+
+    public boolean checkDefaultPass(Integer id){    //jezeli wymaga zmiany to zwraca true
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.query(Table_name, new String[]{COL_6},COL_1 + "=?",
+                new String[]{id.toString()},null, null, null);
+        if (res != null && res.moveToFirst()&& res.getCount()>0) {
+            return spr(res.getInt(0));
+        }
+        return false;
     }
 
     public boolean checkIsAdmin (String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.query(Table_name, new String[]{COL_4},COL_2 + "=?",
+                new String[]{username},null, null, null);
+        if (res != null && res.moveToFirst()&& res.getCount()>0) {
+            return spr(res.getInt(0));
+            }
         return false;
-    }
+        }
 
     public boolean spr(int a){
         if(a==0)return false; else if(a==1) return true; else return false;
     }
 
-    public boolean addUser(String username, int range) {
+    public boolean addUser(String username, int range, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, username);
         contentValues.put(COL_3, "secure");
         contentValues.put(COL_4, range);
+        contentValues.put(COL_5, name);
+        contentValues.put(COL_6, 1);
         long result = db.insert(Table_name, null, contentValues);
         if (result == -1)
             return false;
@@ -89,8 +100,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public Cursor selectUserById(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from "+Table_name+" WHERE "+ COL_1 +" = '"+ id +"';", null);
+        Cursor res = db.query(Table_name, new String[]{COL_1, COL_2, COL_4, COL_5},COL_1 + "=?",
+                new String[]{id.toString()},null, null, null);
+        res.moveToFirst();
         return res;
+    }
+
+    public int selectIdByUsername(String username){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select "+COL_1+" from "+Table_name+" WHERE "+ COL_2 +" = '"+ username +"';", null);
+        res.moveToFirst();
+        return res.getInt(0);
     }
 
     public Integer deleteUser(String id){
@@ -100,19 +120,36 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public boolean checkUserIsExist(String username){  //sprawdz czy istnieje, jesli istenieje więcej niż 0 rekordów to true, mniej - false
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from "+Table_name+" where "+COL_2+" ='" + username + "';", null);
+        Cursor res = db.query(Table_name, new String[]{COL_1},COL_2 + "=?",
+                new String[]{username},null, null, null);
         if (res.getCount() > 0) return true;
         else return false;
     }
 
-    public boolean upadateUser(String id, String username, String password, String range){
+    public boolean upadateUser(Integer id, String username, String password, int range, String name){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1, id);
         contentValues.put(COL_2, username);
         contentValues.put(COL_3, password);
         contentValues.put(COL_4, range);
-        db.update(Table_name, contentValues, "_id = ?", new String[]{ id });
+        contentValues.put(COL_5, name);
+        db.update(Table_name, contentValues, COL_1 +"= ?", new String[]{id.toString()});
+        return true;
+    }
+    public boolean upadateUserPass(Integer id,String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1, id);
+        contentValues.put(COL_3, password);
+        db.update(Table_name, contentValues, COL_1 +"= ?", new String[]{id.toString()});
+        return true;
+    }
+    public boolean upadateUserPassDef(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_6, 0);
+        db.update(Table_name, contentValues, COL_1 +"= ?", new String[]{id.toString()});
         return true;
     }
 }

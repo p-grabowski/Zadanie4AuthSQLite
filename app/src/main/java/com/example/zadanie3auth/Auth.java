@@ -5,14 +5,16 @@ import java.security.PublicKey;
 public class Auth {
         public int Id;
         public String Username;
-        public boolean isAdmin;
+        public int Range;
         private String Password;
+        public String Name;
 
-    public Auth(int id, String user, String passwd, Boolean admin){
+    public Auth(int id, String user, String passwd, int range, String name){
         Id = id;
         Username = user;
         Password = "abc"+passwd+"def";
-        isAdmin = admin;
+        Range = range;
+        Name = name;
     }
 
     public boolean checkPass(String user, String pass){

@@ -6,24 +6,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import javax.xml.transform.Templates;
+
 
 public class AfterLoginActivity extends AppCompatActivity {
 
     TextView textView;
-    String username;
-    String isadmin;
+    int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_login);
 
         textView = findViewById(R.id.afterTv);
-        username = getIntent().getStringExtra("username");
-        isadmin = getIntent().getStringExtra("isadmin");
+        id = getIntent().getIntExtra("id",0);
+        String a;
+        if(Global.range==1)
+            a = "Admin";
+        else
+            a = "User";
 
-
-        textView.setText(isadmin + ": " + username);
+        textView.setText(a + ": " + Global.name);
     }
     @Override
     public void onBackPressed() {

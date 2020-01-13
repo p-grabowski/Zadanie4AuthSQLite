@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     Auth[] Users = new Auth[5];
 
     static DataBaseHelper baza;
-
+    public Auth uzytkownik;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
  */
 
 if(baza.checkUserIsExist("admin")==false) {
-    baza.addUser("admin", 1);
-    baza.addUser("user1", 0);
-    baza.addUser("user2", 0);
+    baza.addUser("admin", 1,"Admin Kowalski");
+    baza.addUser("user1", 0, "Uzytkownik Pierwszy");
+    baza.addUser("user2", 0, "Uzytkownik Drugi");
     Log.d("Users", "dodano admina");
-}else         Log.d("Users", " nie dodano");
+}else Log.d("Users", " nie dodano");
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -55,13 +55,25 @@ if(baza.checkUserIsExist("admin")==false) {
                     Log.d("Users", "" + usernameS + " - " + passwdS);
                     if (baza.login(usernameS, passwdS)){
                         Toast.makeText(MainActivity.this, "zalogowano", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, AfterLoginActivity.class);
-                        intent.putExtra("username", usernameS);
-                        if(baza.checkIsAdmin(usernameS)){ intent.putExtra("isadmin", "Admin");}
-                        else{ intent.putExtra("isadmin", "User");}
-                        startActivity(intent);
-                        finish();
-                        break;
+                        Log.d("Users", "zalogowano "+usernameS+" id: "+baza.selectIdByUsername(usernameS));
+
+                        Global.id = baza.selectIdByUsername(usernameS);
+                        Global.name = baza.selectUserById(Global.id).getString(3);
+                        Global.username = baza.selectUserById(Global.id).getString(1);
+                        Global.range = baza.selectUserById(Global.id).getInt(2);
+
+                        if(baza.checkDefaultPass(Global.id)){
+                            Intent intent = new Intent(MainActivity.this, ChangePassActivity.class);
+                            intent.putExtra("defaultPass", "d");
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Intent intent = new Intent(MainActivity.this, AfterLoginActivity.class);
+                            //intent.putExtra("id", baza.selectIdByUsername(usernameS));
+                            startActivity(intent);
+                            finish();
+                            break;
+                        }
                     }
                     else {
                         Toast.makeText(MainActivity.this, "Bledny username lub password", Toast.LENGTH_SHORT).show();

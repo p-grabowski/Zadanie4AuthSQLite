@@ -100,7 +100,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public Cursor selectUserById(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.query(Table_name, new String[]{COL_1, COL_2, COL_4, COL_5},COL_1 + "=?",
+        Cursor res = db.query(Table_name, new String[]{COL_1, COL_2, COL_4, COL_5, COL_3},COL_1 + "=?",
                 new String[]{id.toString()},null, null, null);
         res.moveToFirst();
         return res;
@@ -134,6 +134,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_3, password);
         contentValues.put(COL_4, range);
         contentValues.put(COL_5, name);
+        contentValues.put(COL_6, 1);
         db.update(Table_name, contentValues, COL_1 +"= ?", new String[]{id.toString()});
         return true;
     }

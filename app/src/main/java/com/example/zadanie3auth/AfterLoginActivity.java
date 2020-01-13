@@ -1,7 +1,5 @@
 package com.example.zadanie3auth;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,7 +9,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import static com.example.zadanie3auth.MainActivity.baza;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 
 public class AfterLoginActivity extends AppCompatActivity {
@@ -20,11 +19,13 @@ public class AfterLoginActivity extends AppCompatActivity {
     //int id;
     Button addUser;
     ListView listUsers;
+    DataBaseHelper baza;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_login);
+        baza = new DataBaseHelper(this);
 
         textView = findViewById(R.id.afterTv);
         addUser = findViewById(R.id.afterBtAddUser);
@@ -55,7 +56,9 @@ public class AfterLoginActivity extends AppCompatActivity {
         listUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //edycja
+                Intent intent = new Intent(AfterLoginActivity.this, EditUserActivity.class);
+                intent.putExtra("edit", position);
+                startActivity(intent);
             }
         });
 

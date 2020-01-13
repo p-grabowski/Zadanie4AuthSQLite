@@ -38,12 +38,13 @@ public class MainActivity extends AppCompatActivity {
         Users[4] = new Auth(5, "user5","test5",false);
  */
 
-//if(baza.checkUserIsExist("admin")==false) {
+if(baza.checkUserIsExist("admin")==false) {
     baza.addUser("admin", 1);
     baza.addUser("user1", 0);
     baza.addUser("user2", 0);
-    Log.d("Users", "dodano");
-//}else         Log.d("Users", " nie dodano");
+    Log.d("Users", "dodano admina");
+}else         Log.d("Users", " nie dodano");
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
